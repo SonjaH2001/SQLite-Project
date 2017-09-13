@@ -1,4 +1,3 @@
-
 # Menu Option 1 program creates a database and a table.
 # Menu Option 2 program adds a row of data to the database table.
 # Menu Option 3 program updates a row in the database table.
@@ -8,6 +7,8 @@
 # Create a database table of products with a unique key
 # and 6 additional of product data columns.
 # Use various data types and constraints such as Not Null, default values, etc.
+
+#testing github
 
 import sqlite3  # import the library
 
