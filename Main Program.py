@@ -14,14 +14,14 @@ import sqlite3  # import the library
 
 sqlite_file = 'Products_db.sqlite'  # name of the sqlite database file
 table_name1 = 'Produce_table1'  # name of the table to be created
-new_field = 'Lettuce'  # name of the field to be created
+new_field = 'Produce_item'  # name of the field to be created
 
 
 def main():
     show_menu()  # call the function to display options to the user
     # main()
 
-def show_menu():
+def show_menu(): # provides the user with the options
     while True:
         print("Menu options:    ")
         print("1: CREATE a database and table")
@@ -31,8 +31,9 @@ def show_menu():
         print("5: SHOW the data from entire table")
         print("6: DISPLAY a single row of data")
         print("9: QUIT program")
-        print()
-        user_input = input("Please enter the number of your selection: ")
+        print() #blank space
+        user_input = input("Please enter the number of your selection: ")# gets the user choice
+        #call the function for user's choice
         if user_input == "1":
             create_database()
         elif user_input == "2":
@@ -50,10 +51,10 @@ def show_menu():
             print("Thank you, goodbye")
             break  # ends the program
         else:
-            print()
-            print("please make a valid selection, jackass.")
-            print()
-            # show_menu() nope. It loops back up to the top, did while loop instead.
+            print()#blank space
+            print("please make a valid selection, jackass.")#prompts user for valid input
+            print()#blank space
+            # show_menu() nope. It loops back up to the top, did a while loop instead.
 
 
 def create_database():
@@ -76,7 +77,7 @@ def show_single_row():
 
 
 
-main()
+main()#calls the main program
 
 
 
