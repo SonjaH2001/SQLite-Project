@@ -13,13 +13,20 @@ import sqlite3  # import the library
 sqlite_file = 'ThingsNStuff_db.sqlite'  # name of the sqlite database file
 table_name1 = 'TNS_table1'  # name of the table to be created
 new_field = 'TNS_1st_column'
-field_type = 'INTEGER'
+new_field_2 = 'Column 2'
+new_field_3 = 'Column 3'
+new_field_4 = 'Column 4'
+new_field_5 = 'Column 5'
+new_field_6 = 'Column 6'
+new_field_7 = 'Column 7'
+field_type = 'TEXT'
 # id_column = 'first_field'  # name of the field to be created
 # new_column_2 = '2nd_field'# name of the field to be created
 # new_column_3 = '3rd_field'# name of the field to be created
 # new_column_4 = '4th_field'# name of the field to be created
 # new_column_5 = '5th_field'# name of the field to be created
 # new_column_6 = '6th_field'# name of the field to be created
+# new_column_7 = '7th_field'# name of the field to be created
 # field_type = 'TEXT' #column data type
 # default_val = 'add content' #sets default value for new rows
 
@@ -35,7 +42,8 @@ def show_menu(): # provides the user with the options
         print("4: DELETE a row of data from the table")
         print("5: SHOW the data from entire table")
         print("6: DISPLAY a single row of data")
-        print("7: DROP TABLE-->BE CAREFUL")
+        print("8: add a new COLUMN to the table")
+        # print("7: DROP TABLE-->BE CAREFUL")
         print("9: QUIT program")
         print() #blank space
         user_input = input("Please enter the number of your selection: ")# gets the user choice
@@ -54,6 +62,8 @@ def show_menu(): # provides the user with the options
             show_single_row()
         elif user_input == "7":
             drop_table()
+        elif user_input == "8":
+            add_new_column()
         elif user_input == "9":
             print()
             print("Thank you, goodbye")
@@ -93,11 +103,8 @@ def add_row():
         # connecting to the database file
 #     conn = sqlite3.connect(sqlite_file)
 #     c = conn.cursor()
-#         #add the new column
-# #--->HOW TO add new_column_3, etc??????????????????
-#     c.execute("ALTER TABLE {tn} ADD COLUMN '{cn}' {ft}"\
-#               .format(tn=table_name1, cn=new_column_2, ft=field_type))
-#         # commit changes and close the DB file connection
+#
+# #         # commit changes and close the DB file connection
 #     conn.commit()
 #     conn.close()
 
@@ -131,7 +138,16 @@ def show_all_rows():
 def show_single_row():
     print("----->here is the row you requested")# for testing
 
-
+def add_new_column():
+    print("----->you have a new column!!")# for testing
+    #connecting to db file
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
+    #add new column
+    c.execute(("ALTER TABLE {tn} ADD COLUMN '{nf}' {ft}" \
+              .format(tn=table_name1, nf=new_field_2, ft=field_type)))
+    print(("success. new COLUMN added"))
+    # #--->HOW TO add new_column_3, etc??????????????????
 
 main()#calls the main program
 
