@@ -65,10 +65,12 @@ def show_menu(): # provides the user with the options
             # show_menu() nope. It loops back up to the top, did a while loop instead.
 
 def drop_table():
-    # conn = sqlite3.connect(sqlite_file)
-    # c = conn.cursor()
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
     # c.execute('DROP TABLE {tn} )({nf} {ft})'\
     #           .format(tn=table_name1, nf=new_field, ft=field_type))
+    c.execute('DROP TABLE {tn}' \
+              .format(tn=table_name1))
     print("your database is gone. forever.")
 
 def create_database():
@@ -78,7 +80,7 @@ def create_database():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
         #creating table with 1 column
-    c.execute('CREATE TABLE {tn} ({nf} {ft})'\
+    c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft})'\
               .format(tn=table_name1, nf=new_field, ft=field_type))
     print("successful database table") #test print
         #commit changes and close the DB file connection
