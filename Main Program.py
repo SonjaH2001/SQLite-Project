@@ -60,8 +60,9 @@ def show_menu(): # provides the user with the options
             show_all_rows()
         elif user_input == "6":
             show_single_row()
-        # elif user_input == "7":
+        elif user_input == "7":
         #     drop_table()
+            view_column_names()
         elif user_input == "8":
             add_new_column()
         elif user_input == "9":
@@ -82,6 +83,16 @@ def drop_table():
     c.execute('DROP TABLE {tn}' \
               .format(tn=table_name1))
     print("your database is gone. forever.")
+    conn.close()
+
+def view_column_names(): #for testing, might be useful in a query
+    #from https://github.com/rasbt/python_reference/blob/master/tutorials/sqlite3_howto/code/get_columnnames.py
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
+    c.execute('PRAGMA TABLE_INFO ({})'.format(table_name1))
+    names = [tup[1] for tup in c.fetchall()]
+    print(names)
+    conn.close()
 
 def create_database():
     # print("--->creating the database")  # for testing
