@@ -60,8 +60,8 @@ def show_menu(): # provides the user with the options
             show_all_rows()
         elif user_input == "6":
             show_single_row()
-        elif user_input == "7":
-            drop_table()
+        # elif user_input == "7":
+        #     drop_table()
         elif user_input == "8":
             add_new_column()
         elif user_input == "9":
