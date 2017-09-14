@@ -19,7 +19,8 @@ new_field_4 = 'Column 4'
 new_field_5 = 'Column 5'
 new_field_6 = 'Column 6'
 new_field_7 = 'Column 7'
-field_type = 'TEXT'
+field_type_int = 'INTEGER'
+field_type_txt = 'TEXT'
 # id_column = 'first_field'  # name of the field to be created
 # new_column_2 = '2nd_field'# name of the field to be created
 # new_column_3 = '3rd_field'# name of the field to be created
@@ -35,6 +36,7 @@ def main():
 
 def show_menu(): # provides the user with the options
     while True:
+        print() #intentional blank line
         print("Menu options:    ")
         print("1: CREATE a database and table")
         print("2: ADD a row of data to the table")
@@ -45,7 +47,7 @@ def show_menu(): # provides the user with the options
         print("8: add a new COLUMN to the table")
         # print("7: DROP TABLE-->BE CAREFUL")
         print("9: QUIT program")
-        print() #blank space
+        print() #intentional blank line
         user_input = input("Please enter the number of your selection: ")# gets the user choice
         #call the function for user's choice
         if user_input == "1":
@@ -70,40 +72,20 @@ def show_menu(): # provides the user with the options
             print("Thank you, goodbye")
             break  # ends the program
         else:
-            print()#blank space
+            print()#intentional blank line
             print("please make a valid selection, jackass.")#prompts user for valid input
-            print()#blank space
+            print()#intentional blank line
             # show_menu() nope. It loops back up to the top, did a while loop instead.
 
-def drop_table():
-    conn = sqlite3.connect(sqlite_file)
-    c = conn.cursor()
-    # c.execute('DROP TABLE {tn} )({nf} {ft})'\
-    #           .format(tn=table_name1, nf=new_field, ft=field_type))
-    c.execute('DROP TABLE {tn}' \
-              .format(tn=table_name1))
-    print("your database is gone. forever.")
-    conn.close()
-
-def view_column_names(): #for testing, might be useful in a query
-    #from https://github.com/rasbt/python_reference/blob/master/tutorials/sqlite3_howto/code/get_columnnames.py
-    conn = sqlite3.connect(sqlite_file)
-    c = conn.cursor()
-    c.execute('PRAGMA TABLE_INFO ({})'.format(table_name1))
-    names = [tup[1] for tup in c.fetchall()]
-    print(names)
-    conn.close()
-
 def create_database():
-    # print("--->creating the database")  # for testing
-
+    print("--->creating the database")  # for testing
         # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
-        #creating table with 1 column
-    c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft})'\
-              .format(tn=table_name1, nf=new_field, ft=field_type))
-    print("successful database table") #test print
+        #creating table with 1 column and PK. cite: Mason
+    c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY )'\
+                  .format(tn=table_name1, nf=new_field, ft=field_type_int))
+    print("Table: "+table_name1, "\t" "Columns: "+new_field, "\t" "Data type: "+field_type_int) #test print
         #commit changes and close the DB file connection
     conn.commit()
     conn.close()
@@ -150,15 +132,34 @@ def show_single_row():
     print("----->here is the row you requested")# for testing
 
 def add_new_column():
-    print("----->you have a new column!!")# for testing
+    #print("----->you have a new column!!")# for testing
     #connecting to db file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
     #add new column
     c.execute(("ALTER TABLE {tn} ADD COLUMN '{nf}' {ft}" \
-              .format(tn=table_name1, nf=new_field_2, ft=field_type)))
+              .format(tn=table_name1, nf=new_field_2, ft=field_type_txt)))
     print(("success. new COLUMN added"))
     # #--->HOW TO add new_column_3, etc??????????????????
+
+def view_column_names(): #for testing, might be useful in a query
+    #from https://github.com/rasbt/python_reference/blob/master/tutorials/sqlite3_howto/code/get_columnnames.py
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
+    c.execute('PRAGMA TABLE_INFO ({})'.format(table_name1))
+    names = [tup[1] for tup in c.fetchall()]
+    print(names)
+    conn.close()
+
+def drop_table(): #for testing
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
+    # c.execute('DROP TABLE {tn} )({nf} {ft})'\
+    #           .format(tn=table_name1, nf=new_field, ft=field_type))
+    c.execute('DROP TABLE {tn}' \
+              .format(tn=table_name1))
+    print("your database is gone. forever.")
+    conn.close()
 
 main()#calls the main program
 
