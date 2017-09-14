@@ -63,8 +63,8 @@ def show_menu(): # provides the user with the options
         elif user_input == "6":
             show_single_row()
         elif user_input == "7":
-        #     drop_table()
-            view_column_names()
+            drop_table()
+            # view_column_names()
         elif user_input == "8":
             add_new_column()
         elif user_input == "9":
@@ -82,10 +82,20 @@ def create_database():
         # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
+
+    db = conn.execute('''CREATE TABLE COMPANY
+        (ID INT PRIMARY KEY   NOT NULL,
+        NAME    TEXT          NOT NULL,
+        AGE     INT           NOT NULL,
+        ADDRESS     VARCHAR(50),
+        SALARY       REAL);''')
+
+    print(db) #test to see the DB object
+
         #creating table with 1 column and PK. cite: Mason
-    c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY )'\
-                  .format(tn=table_name1, nf=new_field, ft=field_type_int))
-    print("Table: "+table_name1, "\t" "Columns: "+new_field, "\t" "Data type: "+field_type_int) #test print
+    # c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY )'\
+    #               .format(tn=table_name1, nf=new_field, ft=field_type_int))
+    # print("Table: "+table_name1, "\t" "Columns: "+new_field, "\t" "Data type: "+field_type_int) #test print
         #commit changes and close the DB file connection
     conn.commit()
     conn.close()
@@ -93,13 +103,13 @@ def create_database():
 def add_row():
     print("----->adding a row")  # for testing
 
-        # connecting to the database file
-#     conn = sqlite3.connect(sqlite_file)
-#     c = conn.cursor()
-#
-# #         # commit changes and close the DB file connection
-#     conn.commit()
-#     conn.close()
+        #connecting to the database file
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
+
+         # commit changes and close the DB file connection
+    conn.commit()
+    conn.close()
 
 def update_row():
     print("----->updating a row")# for testing
@@ -131,6 +141,22 @@ def show_all_rows():
 def show_single_row():
     print("----->here is the row you requested")# for testing
 
+    # connecting to the database file
+    conn = sqlite3.connect(sqlite_file)
+    # c = conn.cursor()
+    cursor = conn.execute("SELECT id, name, age, address, salary from COMPANY")
+    for row in cursor:
+        print("ID = ", row[0])
+        print("NAME = ", row[1])
+        print("AGE = ", row[2])
+        print("ADDRESS = ", row[3])
+        print("SALARY = ", row[4])
+    print("YAY")
+
+    # commit changes and close the DB file connection
+    # conn.commit()
+    conn.close()
+
 def add_new_column():
     #print("----->you have a new column!!")# for testing
     #connecting to db file
@@ -141,6 +167,9 @@ def add_new_column():
               .format(tn=table_name1, nf=new_field_2, ft=field_type_txt)))
     print(("success. new COLUMN added"))
     # #--->HOW TO add new_column_3, etc??????????????????
+
+
+
 
 def view_column_names(): #for testing, might be useful in a query
     #from https://github.com/rasbt/python_reference/blob/master/tutorials/sqlite3_howto/code/get_columnnames.py
@@ -156,7 +185,7 @@ def drop_table(): #for testing
     c = conn.cursor()
     # c.execute('DROP TABLE {tn} )({nf} {ft})'\
     #           .format(tn=table_name1, nf=new_field, ft=field_type))
-    c.execute('DROP TABLE {tn}' \
+    c.execute('DROP TABLE COMPANY' \
               .format(tn=table_name1))
     print("your database is gone. forever.")
     conn.close()
