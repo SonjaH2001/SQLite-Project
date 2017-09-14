@@ -4,9 +4,9 @@
 # Menu Option 4 program deletes a row from the database table.
 # Menu Option 5 program displays all the rows in the database table.
 # Menu Option 6 program display a single row of data based on an input value.
-# Create a database table of products with a unique key
-# and 6 additional of product data columns.
+# Create a database table of products with a unique key + 6 more columns
 # Use various data types and constraints such as Not Null, default values, etc.
+#************Sonja Hayden 2950-90********************************
 
 import sqlite3  # import the library
 
@@ -21,13 +21,7 @@ new_field_6 = 'Column 6'
 new_field_7 = 'Column 7'
 field_type_int = 'INTEGER'
 field_type_txt = 'TEXT'
-# id_column = 'first_field'  # name of the field to be created
-# new_column_2 = '2nd_field'# name of the field to be created
-# new_column_3 = '3rd_field'# name of the field to be created
-# new_column_4 = '4th_field'# name of the field to be created
-# new_column_5 = '5th_field'# name of the field to be created
-# new_column_6 = '6th_field'# name of the field to be created
-# new_column_7 = '7th_field'# name of the field to be created
+
 # field_type = 'TEXT' #column data type
 # default_val = 'add content' #sets default value for new rows
 
@@ -81,7 +75,7 @@ def create_database():
     print("--->creating the database")  # for testing
         # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
-    c = conn.cursor()
+    c = conn.cursor()       #cite http://www.sqlitetutorial.net/sqlite-create-table/
 
     db = conn.execute('''CREATE TABLE COMPANY
         (ID INT PRIMARY KEY   NOT NULL,
