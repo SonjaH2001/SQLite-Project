@@ -43,7 +43,7 @@ def show_menu(): # provides the user with the options
         print("9: QUIT program")
         print() #intentional blank line
         user_input = input("Please enter the number of your selection: ")# gets the user choice
-        #call the function for user's choice
+        #call the function, from user's choice
         if user_input == "1":
             create_database()
         elif user_input == "2":
@@ -57,8 +57,8 @@ def show_menu(): # provides the user with the options
         elif user_input == "6":
             show_single_row()
         elif user_input == "7":
-            drop_table()
-            # view_column_names()
+            # drop_table()
+            view_column_names()
         elif user_input == "8":
             add_new_column()
         elif user_input == "9":
@@ -83,11 +83,12 @@ def create_database():
     #     AGE     INT           NOT NULL,
     #     ADDRESS     VARCHAR(50),
     #     SALARY       REAL);''')
-
     # print(db) #test to see the DB object
+    # worked but I don't understand
 
         #creating table with 1 column and PK. cite: Mason
-    c.execute('CREATE TABLE table_name1 (new_field integer PRIMARY KEY NULL, new_field_2 TEXT, new_field_3 TEXT)')
+    c.execute('CREATE TABLE table_name1 (new_field integer PRIMARY KEY NULL, new_field_2 TEXT, new_field_3 TEXT,\
+            new_field_4 TEXT, new_field_5 TEXT, new_field_6 TEXT, new_field_7 TEXT)')
     # c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY,\
     #         {nf2} {ft_T}, {nf3} {ft}, {nf4} {ft_T}, {nf5} {ft}, {nf6} {ft}, {nf7} {ft})'\
     # .format(tn=table_name1, nf=new_field, nf2=new_field_2, nf3=new_field_3, nf4=new_field_4, nf5=new_field_5, nf6=new_field_6, nf7=new_field_7, ft=field_type_int, ft_T=field_type_txt))
@@ -110,8 +111,8 @@ def update_row():
     print("----->updating a row")# for testing
 
     # connecting to the database file
-    # conn = sqlite3.connect(sqlite_file)
-    # c = conn.cursor()
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
     # try: #inserts an ID w/specific val in a 3rd (new) column
     #     c.execute("INSERT INTO {tn} ({idf}, {cn}) VALUES (123456, 'test')".\
     #               format(tn=table_name1, idf=id_column, cn=new_column_3))
@@ -124,8 +125,8 @@ def update_row():
     # c.execute("UPDATE {tn} SET {cn}= ('Hey you guys!') WHERE {idf}=(123456)".\
     #           format(tn=table_name1, cn=new_column_3, idf=id_column))
     # # commit changes and close the DB file connection
-    # conn.commit()
-    # conn.close()
+    conn.commit()
+    conn.close()
 
 def delete_row():
     print("----->delete a row")  # for testing
@@ -140,6 +141,7 @@ def show_all_rows():
     table_display = c.fetchall()
     print(table_name1, table_display)
 
+    #close the DB file connection
     conn.close()
 
 def show_single_row():
@@ -147,7 +149,8 @@ def show_single_row():
 
     # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
-    # c = conn.cursor()
+    c = conn.cursor()
+
     cursor = conn.execute("SELECT id, name, age, address, salary from COMPANY")
     for row in cursor:
         print("ID = ", row[0])
