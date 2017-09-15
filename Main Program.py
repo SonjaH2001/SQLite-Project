@@ -11,14 +11,14 @@
 import sqlite3  # import the library
 
 sqlite_file = 'ThingsNStuff_db.sqlite'  # name of the sqlite database file
-table_name1 = 'TNS_table1'  # name of the table to be created
-new_field = 'TNS_1st_column'
-new_field_2 = 'Column 2'
-new_field_3 = 'Column 3'
-new_field_4 = 'Column 4'
-new_field_5 = 'Column 5'
-new_field_6 = 'Column 6'
-new_field_7 = 'Column 7'
+table_name1 = 'WIDGETZ'  # name of the table to be created
+new_field = 'Primary Key'
+new_field_2 = 'NAME'
+new_field_3 = 'SKU'
+new_field_4 = 'PRICE'
+new_field_5 = 'DESCRIPTION'
+new_field_6 = 'ON-HAND Quantity'
+new_field_7 = 'ORDER Quantity'
 field_type_int = 'INTEGER'
 field_type_txt = 'TEXT'
 
@@ -86,8 +86,8 @@ def create_database():
     # print(db) #test to see the DB object
     # worked but I don't understand
 
-        #creating table with 1 column and PK. cite: Mason
-    c.execute('CREATE TABLE table_name1 (new_field integer PRIMARY KEY NULL, new_field_2 TEXT, new_field_3 TEXT,\
+        #creating table with columns, 1st is ID
+    c.execute('CREATE TABLE IF NOT EXISTS table_name1 (new_field integer PRIMARY KEY NULL, new_field_2 TEXT, new_field_3 TEXT,\
             new_field_4 TEXT, new_field_5 TEXT, new_field_6 TEXT, new_field_7 TEXT)')
     # c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY,\
     #         {nf2} {ft_T}, {nf3} {ft}, {nf4} {ft_T}, {nf5} {ft}, {nf6} {ft}, {nf7} {ft})'\
@@ -102,6 +102,15 @@ def add_row():
         #connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
+
+    try:
+        c.execute("INSERT INTO table_name1 (new_field, new_field_2, new_field_3, new_field_4, new_field_5, new_field_6, new_field_7)\
+            VALUES (123456, 'test 2', 'test 3', 'test 4', 'test 5', 'test 6', 'test 7')")
+            # format(tn=table_name, idf=id_column, cn=column_name))
+        # c.execute("INSERT INTO {tn} ({idf}, {cn, }) VALUES (123456, 'test 2', 'test 3', 'test 4', 'test 5', 'test 6', 'test 7')".\
+        #           format(tn=table_name, idf=id_column, cn=column_name))
+    except sqlite3.IntegrityError:
+        print('ERROR: ID already exists in PRIMARY KEY column {}'.format())
 
          # commit changes and close the DB file connection
     conn.commit()
@@ -130,6 +139,13 @@ def update_row():
 
 def delete_row():
     print("----->delete a row")  # for testing
+    # Connecting to the database file
+    conn = sqlite3.connect(sqlite_file)
+    c = conn.cursor()
+
+    # commit changes and close the DB file connection
+    conn.commit()
+    conn.close()
 
 def show_all_rows():
     print("----->here is the entire table")# for testing
@@ -151,8 +167,8 @@ def show_single_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    cursor = conn.execute("SELECT id, name, age, address, salary from COMPANY")
-    for row in cursor:
+    c.execute("SELECT * FROM " + table_name1)
+    for row in c:
         print("ID = ", row[0])
         print("NAME = ", row[1])
         print("AGE = ", row[2])
