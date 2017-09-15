@@ -12,13 +12,13 @@ import sqlite3  # import the library
 
 sqlite_file = 'ThingsNStuff_db.sqlite'  # name of the sqlite database file
 table_name1 = 'WIDGETZ'  # name of the table to be created
-new_field = 'Primary Key'
+new_field = 'Primary_Key'
 new_field_2 = 'NAME'
 new_field_3 = 'SKU'
 new_field_4 = 'PRICE'
 new_field_5 = 'DESCRIPTION'
-new_field_6 = 'ON-HAND Quantity'
-new_field_7 = 'ORDER Quantity'
+new_field_6 = 'On_HAND_Quantity'
+new_field_7 = 'ORDER_Quantity'
 field_type_int = 'INTEGER'
 field_type_txt = 'TEXT'
 
@@ -87,11 +87,21 @@ def create_database():
     # worked but I don't understand
 
         #creating table with columns, 1st is ID
-    c.execute('CREATE TABLE IF NOT EXISTS table_name1 (new_field integer PRIMARY KEY NULL, new_field_2 TEXT, new_field_3 TEXT,\
-            new_field_4 TEXT, new_field_5 TEXT, new_field_6 TEXT, new_field_7 TEXT)')
+    create_table_sql = (
+        'CREATE TABLE If NOT EXISTS {tn} ('
+        ' {nf} {ft} PRIMARY KEY ,'
+        ' {nf2} {ft_T} NOT NULL , '
+        ' {nf3} {ft_T} NOT NULL ,'
+        ' {nf4} {ft} NOT NULL ,'
+        ' {nf5} {ft_T} NOT NULL ,'
+        ' {nf6} {ft} NOT NULL ,'
+        ' {nf7} {ft} NOT NULL '
+        ')  '
+    ).format(tn=table_name1, nf=new_field, nf2=new_field_2, nf3=new_field_3, nf4=new_field_4, nf5=new_field_5, nf6=new_field_6, nf7=new_field_7, ft=field_type_int, ft_T=field_type_txt)
+
+    c.execute(create_table_sql)
     # c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY,\
     #         {nf2} {ft_T}, {nf3} {ft}, {nf4} {ft_T}, {nf5} {ft}, {nf6} {ft}, {nf7} {ft})'\
-    # .format(tn=table_name1, nf=new_field, nf2=new_field_2, nf3=new_field_3, nf4=new_field_4, nf5=new_field_5, nf6=new_field_6, nf7=new_field_7, ft=field_type_int, ft_T=field_type_txt))
         #commit changes and close the DB file connection
     conn.commit()
     conn.close()
@@ -104,8 +114,11 @@ def add_row():
     c = conn.cursor()
 
     try:
-        c.execute("INSERT INTO table_name1 (new_field, new_field_2, new_field_3, new_field_4, new_field_5, new_field_6, new_field_7)\
-            VALUES (123456, 'test 2', 'test 3', 'test 4', 'test 5', 'test 6', 'test 7')")
+        # c.execute('INSERT INTO WIDGETZ (?,?,?,?,?,?) VALUES (?, ?, ?, ?, ?, ?)',
+        #           ( new_field_2, new_field_3, new_field_4, new_field_5, new_field_6, new_field_7, "name", "sku", "int", "desc", "int", "int"))
+        c.execute('INSERT INTO WIDGETZ ("NAME", "SKU", "PRICE", "DESCRIPTION", "On_HAND_Quantity", "ORDER_Quantity") VALUES ("name", "sku", "int", "desc", "int", "int")')
+        # c.execute("INSERT INTO table_name1 (new_field, new_field_2, new_field_3, new_field_4, new_field_5, new_field_6, new_field_7)\
+        #     VALUES (123456, 'test 2', 'test 3', 'test 4', 'test 5', 'test 6', 'test 7')")
             # format(tn=table_name, idf=id_column, cn=column_name))
         # c.execute("INSERT INTO {tn} ({idf}, {cn, }) VALUES (123456, 'test 2', 'test 3', 'test 4', 'test 5', 'test 6', 'test 7')".\
         #           format(tn=table_name, idf=id_column, cn=column_name))
