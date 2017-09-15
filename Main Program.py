@@ -113,9 +113,7 @@ def add_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    try:
-        # c.execute('INSERT INTO WIDGETZ (?,?,?,?,?,?) VALUES (?, ?, ?, ?, ?, ?)',
-        #           ( new_field_2, new_field_3, new_field_4, new_field_5, new_field_6, new_field_7, "name", "sku", "int", "desc", "int", "int"))
+    try: #help from Mason and http://www.sqlitetutorial.net/  Can't use "?" I guess.
         c.execute('INSERT INTO WIDGETZ ("NAME", "SKU", "PRICE", "DESCRIPTION", "On_HAND_Quantity", "ORDER_Quantity") VALUES ("name", "sku", "int", "desc", "int", "int")')
         # c.execute("INSERT INTO table_name1 (new_field, new_field_2, new_field_3, new_field_4, new_field_5, new_field_6, new_field_7)\
         #     VALUES (123456, 'test 2', 'test 3', 'test 4', 'test 5', 'test 6', 'test 7')")
@@ -135,6 +133,9 @@ def update_row():
     # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
+
+    c.execute('UPDATE WIDGETZ (SET NAME = "Smith")')
+
     # try: #inserts an ID w/specific val in a 3rd (new) column
     #     c.execute("INSERT INTO {tn} ({idf}, {cn}) VALUES (123456, 'test')".\
     #               format(tn=table_name1, idf=id_column, cn=new_column_3))
@@ -146,6 +147,7 @@ def update_row():
     #     #updates the newly inserted or pre-esisting entry
     # c.execute("UPDATE {tn} SET {cn}= ('Hey you guys!') WHERE {idf}=(123456)".\
     #           format(tn=table_name1, cn=new_column_3, idf=id_column))
+
     # # commit changes and close the DB file connection
     conn.commit()
     conn.close()
