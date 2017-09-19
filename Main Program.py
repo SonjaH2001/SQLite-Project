@@ -12,18 +12,15 @@ import sqlite3  # import the library
 
 sqlite_file = 'ThingsNStuff_db.sqlite'  # name of the sqlite database file
 table_name1 = 'WIDGETZ'  # name of the table to be created
-new_field = 'ITEM_ID'
-new_field_2 = 'NAME'
-new_field_3 = 'SKU'
-new_field_4 = 'PRICE'
-new_field_5 = 'DESCRIPTION'
-new_field_6 = 'On_HAND_Quantity'
-new_field_7 = 'ORDER_Quantity'
-field_type_int = 'INTEGER'
-field_type_txt = 'TEXT'
-
-# field_type = 'TEXT' #column data type
-# default_val = 'add content' #sets default value for new rows
+new_field = 'ITEM_ID'               # Primary Key
+new_field_2 = 'NAME'                #name of column
+new_field_3 = 'SKU'                 #name of column
+new_field_4 = 'PRICE'               #name of column
+new_field_5 = 'DESCRIPTION'         #name of column
+new_field_6 = 'On_HAND_Quantity'    #name of column
+new_field_7 = 'ORDER_Quantity'      #name of column
+field_type_int = 'INTEGER'          #name of column
+field_type_txt = 'TEXT'             #name of column
 
 def main():
     show_menu()  # call the function to display options to the user
@@ -31,7 +28,7 @@ def main():
 def show_menu(): # provides the user with the options
     while True:
         print() #intentional blank line
-        print("Menu options:    ")
+        print("Menu options:    ")      # show user thier options...
         print("1: CREATE a database and table")
         print("2: ADD a row of data to the table")
         print("3: UPDATE a row of data from the table")
@@ -39,7 +36,7 @@ def show_menu(): # provides the user with the options
         print("5: SHOW the data from entire table")
         print("6: DISPLAY a single row of data")
         print("8: add a new COLUMN to the table")
-        # print("7: DROP TABLE-->BE CAREFUL")
+        # print("7: DROP TABLE-->BE CAREFUL")   hiddden, for testing purposes only
         print("9: QUIT program")
         print() #intentional blank line
         user_input = input("Please enter the number of your selection: ")# gets the user choice
@@ -57,10 +54,7 @@ def show_menu(): # provides the user with the options
         elif user_input == "6":
             show_single_row()
         elif user_input == "7": #for testing
-            # view_column_names()
             drop_table()
-        elif user_input == "8":
-            add_new_column()
         elif user_input == "9":
             print()
             print("Thank you, goodbye")
@@ -84,9 +78,9 @@ def create_database():
     #     ADDRESS     VARCHAR(50),
     #     SALARY       REAL);''')
     # print(db) #test to see the DB object
-    # worked but I don't understand
+    # worked but I don't understand it
 
-        #creating table with columns, 1st is ID
+        #creating table with columns, put in a variable to make debugging easier
     create_table_sql = (
         'CREATE TABLE If NOT EXISTS {tn} ('
         ' {nf} {ft} PRIMARY KEY AUTOINCREMENT ,'
@@ -99,7 +93,7 @@ def create_database():
         ')  '
     ).format(tn=table_name1, nf=new_field, nf2=new_field_2, nf3=new_field_3, nf4=new_field_4, nf5=new_field_5, nf6=new_field_6, nf7=new_field_7, ft=field_type_int, ft_T=field_type_txt)
 
-    c.execute(create_table_sql)
+    c.execute(create_table_sql) #pass the variable instead of putting the code into execute statement
     # c.execute('CREATE TABLE IF NOT EXISTS {tn} ({nf} {ft} PRIMARY KEY,\
     #         {nf2} {ft_T}, {nf3} {ft}, {nf4} {ft_T}, {nf5} {ft}, {nf6} {ft}, {nf7} {ft})'\
         #commit changes and close the DB file connection
@@ -157,8 +151,9 @@ def delete_row():
     # Connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
-
+    # deletes this row, TODO have user search for a row to delete
     c.execute('DELETE FROM WIDGETZ WHERE ITEM_ID = 2')
+
     # commit changes and close the DB file connection
     conn.commit()
     conn.close()
@@ -184,39 +179,18 @@ def show_single_row():
     c = conn.cursor()
 
     fetch_row_sql = "SELECT * FROM " + table_name1 + " WHERE Item_id = 1 "
-    c.execute(fetch_row_sql)
-    for row in c:
-        print("ID = ", row[0])
+    c.execute(fetch_row_sql) ##put in a variable to make debugging easier
+    for row in c: #c= cursor Value
+        print("ID number= ", row[0])
         print("NAME = ", row[1])
-        print("AGE = ", row[2])
-        print("ADDRESS = ", row[3])
-        print("SALARY = ", row[4])
-    print("YAY")
+        print("Item SKU = ", row[2])
+        print("Item Description = ", row[3])
+        print("Item Price = ", row[4])
+        print("Quantity On-hand = ", row[5])
+        print("Quantity Ordered = ", row[6])
+    print("YAY, it works") # for testing.  and motivation.
 
     # close the DB file connection
-    conn.close()
-
-def add_new_column():
-    #print("----->you have a new column!!")# for testing
-    #connecting to db file
-    conn = sqlite3.connect(sqlite_file)
-    c = conn.cursor()
-    #add new column
-    c.execute(("ALTER TABLE {tn} ADD COLUMN '{nf}' {ft}" \
-              .format(tn=table_name1, nf=new_field_2, ft=field_type_txt)))
-    print(("success. new COLUMN added"))
-    # #--->HOW TO add new_column_3, etc??????????????????
-
-
-
-
-def view_column_names(): #for testing, might be useful in a query
-    #from https://github.com/rasbt/python_reference/blob/master/tutorials/sqlite3_howto/code/get_columnnames.py
-    conn = sqlite3.connect(sqlite_file)
-    c = conn.cursor()
-    c.execute('PRAGMA TABLE_INFO ({})'.format(table_name1))
-    names = [tup[1] for tup in c.fetchall()]
-    print(names)
     conn.close()
 
 def drop_table(): #for testing
