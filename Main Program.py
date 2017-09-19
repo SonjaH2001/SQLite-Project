@@ -12,7 +12,7 @@ import sqlite3  # import the library
 
 sqlite_file = 'ThingsNStuff_db.sqlite'  # name of the sqlite database file
 table_name1 = 'WIDGETZ'  # name of the table to be created
-new_field = 'Primary_Key'
+new_field = 'ITEM_ID'
 new_field_2 = 'NAME'
 new_field_3 = 'SKU'
 new_field_4 = 'PRICE'
@@ -89,7 +89,7 @@ def create_database():
         #creating table with columns, 1st is ID
     create_table_sql = (
         'CREATE TABLE If NOT EXISTS {tn} ('
-        ' {nf} {ft} PRIMARY KEY ,'
+        ' {nf} {ft} PRIMARY KEY AUTOINCREMENT ,'
         ' {nf2} {ft_T} NOT NULL , '
         ' {nf3} {ft_T} NOT NULL ,'
         ' {nf4} {ft} NOT NULL ,'
@@ -134,7 +134,7 @@ def update_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    c.execute('UPDATE WIDGETZ (SET NAME = "Smith")')
+    c.execute('UPDATE WIDGETZ SET NAME = "Smith" WHERE ITEM_ID = 2')
 
     # try: #inserts an ID w/specific val in a 3rd (new) column
     #     c.execute("INSERT INTO {tn} ({idf}, {cn}) VALUES (123456, 'test')".\
@@ -158,6 +158,7 @@ def delete_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
+    c.execute('DELETE FROM WIDGETZ WHERE ITEM_ID = 2')
     # commit changes and close the DB file connection
     conn.commit()
     conn.close()
@@ -182,7 +183,8 @@ def show_single_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    c.execute("SELECT * FROM " + table_name1)
+    fetch_row_sql = "SELECT * FROM " + table_name1 + " WHERE Item_id = 1 "
+    c.execute(fetch_row_sql)
     for row in c:
         print("ID = ", row[0])
         print("NAME = ", row[1])
