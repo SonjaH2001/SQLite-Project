@@ -35,7 +35,6 @@ def show_menu(): # provides the user with the options
         print("4: DELETE a row of data from the table")
         print("5: SHOW the data from entire table")
         print("6: DISPLAY a single row of data")
-        print("8: add a new COLUMN to the table")
         # print("7: DROP TABLE-->BE CAREFUL")   hiddden, for testing purposes only
         print("9: QUIT program")
         print() #intentional blank line
@@ -164,10 +163,22 @@ def show_all_rows():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    c.execute('SELECT * FROM ' + table_name1)
-    table_display = c.fetchall()
-    print(table_name1, table_display)
-
+    # c.execute('SELECT * FROM ' + table_name1)
+    # table_display = c.fetchall()
+    # print(table_name1, table_display)
+    #NEED to add row headers!!!!!!!!!!
+    fetch_allRows_sql = "SELECT * FROM " + table_name1
+    c.execute(fetch_allRows_sql)  ##put in a variable to make debugging easier
+    for row in c:  # c= cursor Value
+        print("ID number= ", row[0])
+        print("NAME = ", row[1])
+        print("Item SKU = ", row[2])
+        print("Item Description = ", row[3])
+        print("Item Price = ", row[4])
+        print("Quantity On-hand = ", row[5])
+        print("Quantity Ordered = ", row[6])
+        print() #intentional blank line
+    print("YAY, it works")  # for testing.  and motivation.
     #close the DB file connection
     conn.close()
 
