@@ -60,12 +60,12 @@ def show_menu(): # provides the user with the options
             break  # ends the program
         else:
             print()#intentional blank line
-            print("please make a valid selection, jackass.")#prompts user for valid input
+            print("Please make a valid selection, jackass.")#prompts user for valid input
             print()#intentional blank line
             # show_menu() nope. It loops back up to the top, did a while loop instead.
 
 def create_database():
-    print("--->creating the database")  # for testing
+    print("--->creating the database<---")  # for testing
         # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -100,8 +100,7 @@ def create_database():
     conn.close()
 
 def add_row():
-    print("----->adding a row")  # for testing
-
+    print("----->adding a row<-----")  # for testing
         #connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -121,13 +120,12 @@ def add_row():
     conn.close()
 
 def update_row():
-    print("----->updating a row")# for testing
-
+    print("----->updating a row<-----")# for testing
     # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    c.execute('UPDATE WIDGETZ SET NAME = "Smith" WHERE ITEM_ID = 2')
+    c.execute('UPDATE WIDGETZ SET NAME = "Smith", SKU = 666, DESCRIPTION = "Squeezy", PRICE = 99, On_HAND_Quantity = 0, ORDER_Quantity = 8862 WHERE ITEM_ID = 2')
 
     # try: #inserts an ID w/specific val in a 3rd (new) column
     #     c.execute("INSERT INTO {tn} ({idf}, {cn}) VALUES (123456, 'test')".\
@@ -146,7 +144,7 @@ def update_row():
     conn.close()
 
 def delete_row():
-    print("----->delete a row")  # for testing
+    print("----->deleting a row<-----")  # for testing
     # Connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -158,7 +156,7 @@ def delete_row():
     conn.close()
 
 def show_all_rows():
-    print("----->here is the entire table")# for testing
+    print("----->here is the " + table_name1 +  " table<-----")# for testing
     # Connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -170,47 +168,45 @@ def show_all_rows():
     fetch_allRows_sql = "SELECT * FROM " + table_name1
     c.execute(fetch_allRows_sql)  ##put in a variable to make debugging easier
     for row in c:  # c= cursor Value
-        print("ID number= ", row[0])
-        print("NAME = ", row[1])
-        print("Item SKU = ", row[2])
-        print("Item Description = ", row[3])
-        print("Item Price = ", row[4])
-        print("Quantity On-hand = ", row[5])
-        print("Quantity Ordered = ", row[6])
+        print("ID number: ", row[0])
+        print("Item Name: ", row[1])
+        print("Item SKU: ", row[2])
+        print("Item Description: ", row[3])
+        print("Item Price: ", row[4])
+        print("Quantity On-hand: ", row[5])
+        print("Quantity Ordered: ", row[6])
         print() #intentional blank line
     print("YAY, it works")  # for testing.  and motivation.
     #close the DB file connection
     conn.close()
 
 def show_single_row():
-    print("----->here is the row you requested")# for testing
-
+    print("----->here is the row you requested<-----")# for testing
     # connecting to the database file
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    fetch_row_sql = "SELECT * FROM " + table_name1 + " WHERE Item_id = 1 "
+    fetch_row_sql = "SELECT * FROM " + table_name1 + " WHERE Item_id = 2 "
     c.execute(fetch_row_sql) ##put in a variable to make debugging easier
     for row in c: #c= cursor Value
-        print("ID number= ", row[0])
-        print("NAME = ", row[1])
-        print("Item SKU = ", row[2])
-        print("Item Description = ", row[3])
-        print("Item Price = ", row[4])
-        print("Quantity On-hand = ", row[5])
-        print("Quantity Ordered = ", row[6])
+        print("ID number: ", row[0])        #Displays rows by position
+        print("Item Name: ", row[1])
+        print("Item SKU: ", row[2])
+        print("Item Description: ", row[3])
+        print("Item Price: ", row[4])
+        print("Quantity On-hand: ", row[5])
+        print("Quantity Ordered: ", row[6])
+        print() #intentional blank line
     print("YAY, it works") # for testing.  and motivation.
-
     # close the DB file connection
     conn.close()
 
 def drop_table(): #for testing
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
-    # c.execute('DROP TABLE {tn} )({nf} {ft})'\
-    #           .format(tn=table_name1, nf=new_field, ft=field_type))
+    #drops the table, #!TO DO get user input, also lots of "are you sure" warnings
     c.execute('DROP TABLE ' + table_name1)
-    print("your database is gone. forever.")
+    print("Table " + table_name1 + " is gone. forever.")
     conn.commit()
     conn.close()
 
