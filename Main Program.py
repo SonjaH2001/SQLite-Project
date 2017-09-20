@@ -146,8 +146,9 @@ def update_row():
 
     new_info = input("Whats the new name/ testing: ")
 
-    change_row_info = "UPDATE " + table_name1 + " SET " + new_field_2 + new_info + " WHERE " + new_field == row_query_update
-    print(change_row_info)
+    # change_row_info = "UPDATE " + table_name1 + " SET " + new_field_2 + new_info + " WHERE " + new_field == row_query_update
+    change_row_info = "UPDATE WIDGETZ SET NAME = '" + new_info + "' WHERE Item_ID = " + str(row_query_update)
+    c.execute(change_row_info)
 
     #
     # else:
