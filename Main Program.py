@@ -22,8 +22,10 @@ new_field_7 = 'ORDER_Quantity'      #name of column
 field_type_int = 'INTEGER'          #name of column
 field_type_txt = 'TEXT'             #name of column
 
+
 def main():
     show_menu()  # call the function to display options to the user
+
 
 def show_menu(): # provides the user with the options
     while True:
@@ -35,10 +37,10 @@ def show_menu(): # provides the user with the options
         print("4: DELETE a row of data from the table")
         print("5: SHOW the data from entire table")
         print("6: DISPLAY a single row of data")
-        # print("7: DROP TABLE-->BE CAREFUL")   hiddden, for testing purposes only
+        # print("7: DROP TABLE-->BE CAREFUL")   hidden, for testing purposes only
         print("9: QUIT program")
-        print() #intentional blank line
-        user_input = input("Please enter the number of your selection: ")# gets the user choice
+        print()     #intentional blank line
+        user_input = input("Please enter the number of your selection: ")   # gets the user choice
         #call the function, from user's choice
         if user_input == "1":
             create_database()
@@ -63,6 +65,7 @@ def show_menu(): # provides the user with the options
             print("Please make a valid selection, jackass.")#prompts user for valid input
             print()#intentional blank line
             # show_menu() nope. It loops back up to the top, did a while loop instead.
+
 
 def create_database():
     print("--->creating the database<---")  # for testing
@@ -99,6 +102,7 @@ def create_database():
     conn.commit()
     conn.close()
 
+
 def add_row():
     print("----->adding a row<-----")  # for testing
         #connecting to the database file
@@ -118,6 +122,7 @@ def add_row():
          # commit changes and close the DB file connection
     conn.commit()
     conn.close()
+
 
 def update_row():
     print("----->updating a row<-----")# for testing
@@ -143,6 +148,7 @@ def update_row():
     conn.commit()
     conn.close()
 
+
 def delete_row():
     print("----->deleting a row<-----")  # for testing
     # Connecting to the database file
@@ -154,6 +160,7 @@ def delete_row():
     # commit changes and close the DB file connection
     conn.commit()
     conn.close()
+
 
 def show_all_rows():
     print("----->here is the " + table_name1 +  " table<-----")# for testing
@@ -180,6 +187,7 @@ def show_all_rows():
     #close the DB file connection
     conn.close()
 
+
 def show_single_row():
     print("----->here is the row you requested<-----")# for testing
     # connecting to the database file
@@ -200,7 +208,8 @@ def show_single_row():
     print("YAY, it works") # for testing.  and motivation.
     # close the DB file connection
     conn.close()
-#hgjtesttt
+
+
 def drop_table(): #for testing
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
