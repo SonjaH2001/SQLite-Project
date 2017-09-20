@@ -130,7 +130,7 @@ def update_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    c.execute('UPDATE WIDGETZ SET NAME = "Smith", SKU = 666, DESCRIPTION = "Squeezy", PRICE = 99, On_HAND_Quantity = 0, ORDER_Quantity = 8862 WHERE ITEM_ID = 2')
+    c.execute('UPDATE WIDGETZ SET NAME = "Smith", SKU = 666, PRICE = 99,DESCRIPTION = "Squeezy", On_HAND_Quantity = 0, ORDER_Quantity = 8862 WHERE ITEM_ID = 2')
 
     # try: #inserts an ID w/specific val in a 3rd (new) column
     #     c.execute("INSERT INTO {tn} ({idf}, {cn}) VALUES (123456, 'test')".\
