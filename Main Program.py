@@ -168,22 +168,23 @@ def show_all_rows():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    # c.execute('SELECT * FROM ' + table_name1)
-    # table_display = c.fetchall()
-    # print(table_name1, table_display)
     #NEED to add row headers!!!!!!!!!!
-    fetch_allRows_sql = "SELECT * FROM " + table_name1
-    c.execute(fetch_allRows_sql)  ##put in a variable to make debugging easier
-    for row in c:  # c= cursor Value
-        print("ID number: ", row[0])
-        print("Item Name: ", row[1])
-        print("Item SKU: ", row[2])
-        print("Item Description: ", row[3])
-        print("Item Price: ", row[4])
-        print("Quantity On-hand: ", row[5])
-        print("Quantity Ordered: ", row[6])
-        print() #intentional blank line
-    print("YAY, it works")  # for testing.  and motivation.
+    table_query = input("Enter the name of the requested table to view: (HINT!! type WIDGETZ) " )
+    if table_query == table_name1:
+        fetch_allRows_sql = "SELECT * FROM " + table_name1
+        c.execute(fetch_allRows_sql)  ##put in a variable to make debugging easier
+        for row in c:  # c= cursor Value
+            print("ID number: ", row[0])
+            print("Item Name: ", row[1])
+            print("Item SKU: ", row[2])
+            print("Item Description: ", row[3])
+            print("Item Price: ", row[4])
+            print("Quantity On-hand: ", row[5])
+            print("Quantity Ordered: ", row[6])
+            print() #intentional blank line
+        print("YAY, it works")  # for testing.  and motivation.
+    else:
+        print(("Oh so sad.  Not working"))
     #close the DB file connection
     conn.close()
 
@@ -194,18 +195,21 @@ def show_single_row():
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    fetch_row_sql = "SELECT * FROM " + table_name1 + " WHERE Item_id = 2 "
-    c.execute(fetch_row_sql) ##put in a variable to make debugging easier
-    for row in c: #c= cursor Value
-        print("ID number: ", row[0])        #Displays rows by position
-        print("Item Name: ", row[1])
-        print("Item SKU: ", row[2])
-        print("Item Description: ", row[3])
-        print("Item Price: ", row[4])
-        print("Quantity On-hand: ", row[5])
-        print("Quantity Ordered: ", row[6])
-        print() #intentional blank line
-    print("YAY, it works") # for testing.  and motivation.
+    row_query = int(input("Enter the Item Id number: (hint, start at 1) "))
+    if row_query > 0:
+        # print("data type working")#testing
+        fetch_row_sql = "SELECT * FROM " + table_name1 + " WHERE Item_id = " + str(row_query)
+        c.execute(fetch_row_sql) ##put in a variable to make debugging easier
+        for row in c: #c= cursor Value
+            print("ID number: ", row[0])        #Displays rows by position
+            print("Item Name: ", row[1])
+            print("Item SKU: ", row[2])
+            print("Item Description: ", row[3])
+            print("Item Price: ", row[4])
+            print("Quantity On-hand: ", row[5])
+            print("Quantity Ordered: ", row[6])
+            print() #intentional blank line
+        print("YAY, it works") # for testing.  and motivation.
     # close the DB file connection
     conn.close()
 
